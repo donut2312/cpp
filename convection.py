@@ -4,12 +4,10 @@ import polarity_solver as ps
 from polarity_solver import (pts, area, nb_i, nb_j, lap, plot_sphere,
                              N, beta, alpha, delta2)
 
-# fig 4 of the paper uses a different threshold
+#  paper uses a different threshold
 ps.gamma = 0.35
 hill = ps.hill
 
-# flow term, eq S92. v_theta = eps*sin(theta), v_phi = 0, so the flux through
-# a face is (u * v) . n and the divergence is done the same finite volume way
 eps = 1.0
 tau_c = 2.0
 
@@ -35,7 +33,6 @@ vn = np.sum(vface*nrm, axis=1)
 
 
 def div_flow(u):
-    # upwind: take u from whichever cell the flow is coming from
     uu = np.where(vn > 0, u[nb_i], u[nb_j])
     f = vn*uu*Lface
     out = np.zeros_like(u)
